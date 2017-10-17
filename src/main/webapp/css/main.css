@@ -1,0 +1,20 @@
+body {
+    background-color: #a7c292;
+}
+
+h1 {
+    font-family: PT Serif;
+    font-size: 48px;
+    color: #2f2f2f;
+}
+
+label, input{
+
+    font-family: PT Serif;
+    font-size: 24px;
+    color: #2f2f2f;
+    text-align: center;
+    outline: none;
+
+
+}

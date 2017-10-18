@@ -8,7 +8,7 @@ import java.io.IOException;
 /**
  * Created by RyanHarper on 1/31/17.
  */
-@WebServlet(name = "FormServlet", urlPatterns = {"/login"})
+@WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
 public class LoginServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request,
@@ -20,7 +20,7 @@ public class LoginServlet extends HttpServlet {
         if(username.equalsIgnoreCase("admin") &&
             password.equalsIgnoreCase("password")) {
 
-            request.getRequestDispatcher("profile.jsp").forward(request, response);
+            response.sendRedirect("profile.jsp?username=" + request.getParameter("username"));
         } else {
             response.sendRedirect("/login"); //if the username and password isn't admin and password it redirects back to login
         }

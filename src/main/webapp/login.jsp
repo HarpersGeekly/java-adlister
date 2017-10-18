@@ -3,7 +3,7 @@
 
 <%--PROTOTYPE PURPOSES: USING EL. ESSENTIALLY DOES THE SAME AS SERVLET--%>
 <%--<c:if test="${param.username.equalsIgnoreCase('admin') && param.password.equalsIgnoreCase('password')}">--%>
-    <%--<% response.sendRedirect("profile.jsp?username=" + request.getParameter("username")); %>--%>
+<%--<% response.sendRedirect("profile.jsp?username=" + request.getParameter("username")); %>--%>
 <%--</c:if>--%>
 
 <html>

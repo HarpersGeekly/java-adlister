@@ -9,7 +9,7 @@ import java.io.IOException;
  * Created by RyanHarper on 1/31/17.
  */
 @WebServlet(name = "FormServlet", urlPatterns = {"/login"})
-public class FormServlet extends HttpServlet {
+public class LoginServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {

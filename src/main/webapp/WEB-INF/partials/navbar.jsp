@@ -8,7 +8,12 @@
         <ul class="nav navbar-nav navbar-right">
             <c:choose>
                 <c:when test="${sessionScope.containsKey('user')}">
-                    <li><a href="/create">Create</a></li>
+                    <li><a href="ads/create">Create</a></li>
+                </c:when>
+            </c:choose>
+            <c:choose>
+                <c:when test="${sessionScope.containsKey('user')}">
+                    <li><a href="/profile">Profile</a></li>
                 </c:when>
             </c:choose>
             <c:choose>
@@ -19,6 +24,7 @@
                     <li><a href="/login">Login</a></li>
                 </c:otherwise>
             </c:choose>
+
             <li><a href="/register">Register</a></li>
 
         </ul>

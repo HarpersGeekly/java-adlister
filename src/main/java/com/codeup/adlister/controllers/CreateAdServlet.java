@@ -2,6 +2,7 @@ package com.codeup.adlister.controllers;
 
 import com.codeup.adlister.dao.DaoFactory;
 import com.codeup.adlister.models.Ad;
+import com.codeup.adlister.models.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,8 +19,12 @@ public class CreateAdServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        // to get a currently logged in users id, we create a new reference to
+        // that user, and retrieve it from the session (on the right side of the "=" below)
+        // in other words, create a reference (casted) that is keyed to the login session.
+        User user = (User)request.getSession().getAttribute("user");
         Ad ad = new Ad(
-            1, // for now we'll hardcode the user id
+            user.getId(),
             request.getParameter("title"),
             request.getParameter("description")
         );

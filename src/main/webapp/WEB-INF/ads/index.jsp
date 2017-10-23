@@ -15,10 +15,10 @@
     <ul>
         <c:forEach var="ad" items="${ads}">
             <li>
-                <h2>Ad -- <c:out value="${ad.id}" />:</h2>
-                <h4>User: <c:out value="${ad.userId}"/></h4>
-                <h2><c:out value="${ad.title}" /></h2>
-                <h4><c:out value="${ad.description}" /></h4>
+                <%--<h2>Ad: <c:out value="${ad.id}"/></h2>--%>
+                <h1><c:out value="${ad.title}"/></h1>
+                <h3><c:out value="${ad.description}"/></h3>
+                <h4>Username: <c:out value="${ad.username}"/></h4>
             </li>
         </c:forEach>
     </ul>

@@ -1,6 +1,7 @@
 package com.codeup.adlister.dao;
 import com.codeup.adlister.Config;
 import com.codeup.adlister.models.Ad;
+import com.codeup.adlister.models.User;
 import com.mysql.cj.jdbc.Driver;
 import java.sql.*;
 import java.util.ArrayList;
@@ -27,7 +28,8 @@ public class MySQLAdsDao implements Ads {
         Statement stmt = null;
         try {
             stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM ads");
+            // need to specify all the columns because id column will be ambigous since its the same name in both tables
+            ResultSet rs = stmt.executeQuery("SELECT * FROM ads a inner join users u where a.user_id = u.id ");
             return createAdsFromResults(rs);
         } catch (SQLException e) {
             throw new RuntimeException("Error retrieving all ads.", e);
@@ -69,7 +71,11 @@ public class MySQLAdsDao implements Ads {
     private Ad extractAd(ResultSet rs) throws SQLException {
         return new Ad(
             rs.getLong("id"),
-            rs.getLong("user_id"),
+            //rs.getLong("user_id"), instead:
+            new User(rs.getLong("id"),
+                    rs.getString("username"),
+                    rs.getString("email"),
+                    rs.getString("password")),
             rs.getString("title"),
             rs.getString("description")
         );

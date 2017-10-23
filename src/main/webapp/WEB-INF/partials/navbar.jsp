@@ -6,26 +6,16 @@
             <a class="navbar-brand" href="/ads">Adlister</a>
         </div>
         <ul class="nav navbar-nav navbar-right">
-            <c:choose>
-                <c:when test="${sessionScope.containsKey('user')}">
-                    <li><a href="ads/create">Create</a></li>
-                </c:when>
-            </c:choose>
-            <c:choose>
-                <c:when test="${sessionScope.containsKey('user')}">
-                    <li><a href="/profile">Profile</a></li>
-                </c:when>
-            </c:choose>
-            <c:choose>
-                <c:when test="${sessionScope.containsKey('user')}">
-                    <li><a href="/logout">Logout</a></li>
-                </c:when>
-                <c:otherwise>
-                    <li><a href="/login">Login</a></li>
-                </c:otherwise>
-            </c:choose>
 
-            <li><a href="/register">Register</a></li>
+            <c:if test="${sessionScope.user == null}">
+                <li><a href="/login">Login</a></li>
+                <li><a href="/register">Register</a></li>
+            </c:if>
+            <c:if test="${sessionScope.user != null}">
+                <li><a href="ads/create">Create Ad</a></li>
+                <li><a href="/profile">Profile</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </c:if>
 
         </ul>
     </div><!-- /.navbar-collapse -->

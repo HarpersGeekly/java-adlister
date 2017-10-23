@@ -1,5 +1,4 @@
 package com.codeup.adlister.dao;
-import com.codeup.adlister.Config;
 import com.codeup.adlister.models.User;
 import com.mysql.cj.jdbc.Driver;
 
@@ -12,13 +11,13 @@ public class MySQLUsersDao implements Users {
 
     private Connection connection;
 
-    public MySQLUsersDao(Config config) {
+    public MySQLUsersDao() {
         try {
             DriverManager.registerDriver(new Driver());
             connection = DriverManager.getConnection(
-                    config.getUrl(),
-                    config.getUsername(),
-                    config.getPassword()
+                    Config.url,
+                    Config.username,
+                    Config.password
             );
         } catch (SQLException e) {
             throw new RuntimeException("Error connecting to the database!", e);

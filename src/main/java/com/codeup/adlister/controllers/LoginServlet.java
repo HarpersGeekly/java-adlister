@@ -24,11 +24,9 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-
-        Users users = DaoFactory.getUsersDao();
-
+        
         // TODO: find a record in your database that matches the submitted password
-        User user = users.findByUsername(username);
+        User user = DaoFactory.getUsersDao().findByUsername(username);
 
         // TODO: make sure we find a user with that username
         if (user ==null) { //I couldn't find you, I'll try again

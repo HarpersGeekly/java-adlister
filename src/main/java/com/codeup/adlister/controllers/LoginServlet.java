@@ -29,7 +29,7 @@ public class LoginServlet extends HttpServlet {
         User user = DaoFactory.getUsersDao().findByUsername(username);
 
         // make sure we find a user with that username
-        // check the submitted password against what you have in your database (the hashedPassword from LoginServlet is now in DB!)
+        // check the submitted password against what you have in your database (the hashedPassword from LoginServlet is now in DB, user.getPassword())
         boolean validAttempt = user != null && Password.check(password, user.getPassword());
 
         if (validAttempt) {

@@ -12,6 +12,7 @@ public class DaoFactory {
     }
 
     public static Users getUsersDao() {
+        //we're making sure we only have one MySQLUsersDao(), but each Dao will have it's own connection
         if (usersDao == null) {
             usersDao = new MySQLUsersDao();
         }

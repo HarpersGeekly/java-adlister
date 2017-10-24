@@ -11,6 +11,8 @@
 
 <div class="container">
     <h1>Welcome, <c:out value="${sessionScope.user.username}"/>!</h1>
+    <p>Your registered email is: <c:out value="${sessionScope.user.email}"/>.</p>
+    <p>You are currently logged in.</p>
 </div>
 
 </body>

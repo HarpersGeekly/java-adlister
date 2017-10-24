@@ -27,16 +27,19 @@ public class MySQLUsersDao implements Users {
 
     @Override
     public User findByUsername(String username) {
-        String findQuery = "SELECT * FROM users WHERE username = ?";
+        //RECIPE FOR ANY FINDER:
+
+        //write the sql query:
+        String sql = "SELECT * FROM users WHERE username = ?";
 
         try {
             //create a prepared statement and pass the sql:
-            PreparedStatement statement = connection.prepareStatement(findQuery);
-            //find the parameters:
+            PreparedStatement statement = connection.prepareStatement(sql);
+            //bind the parameters:
             statement.setString(1, username);
             //now execute the query and it will return a ResultSet:
             ResultSet resultSet = statement.executeQuery();
-            //check if user isn't there and create a new user
+            //if there's at least one row, build a User
             if (resultSet.next()) {
                 return new User(
                         resultSet.getLong("id"),
@@ -54,19 +57,26 @@ public class MySQLUsersDao implements Users {
 
     @Override
     public Long insert(User user) {
-        String insertQuery = "INSERT INTO users (username, email, password) " +
+        //RECIPE FOR THE INSERT
+
+        //write the sql for the insert
+        String sql = "INSERT INTO users (username, email, password) " +
                 "VALUES (?, ?, ?)";
 
         try {
-            PreparedStatement statement = connection.prepareStatement(insertQuery,
+        //create a prepared statement with the insert, request the generated keys
+            PreparedStatement statement = connection.prepareStatement(sql,
                     Statement.RETURN_GENERATED_KEYS
             );
+        //bind the parameters with their values '?' from the sql query
             statement.setString(1, user.getUsername());
             statement.setString(2, user.getEmail());
             statement.setString(3, user.getPassword());
 
+        //execute the query
             statement.executeUpdate();
 
+        //return the generated key value
             ResultSet rs = statement.getGeneratedKeys();
             rs.next();
             return rs.getLong(1);

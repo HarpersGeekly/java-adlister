@@ -29,7 +29,8 @@ public class MySQLAdsDao implements Ads {
         try {
             stmt = connection.createStatement();
             // need to specify all the columns because id column will be ambigous since its the same name in both tables
-            ResultSet rs = stmt.executeQuery("SELECT * FROM ads a inner join users u where a.user_id = u.id ");
+            ResultSet rs = stmt.executeQuery(
+                    "SELECT * FROM ads a inner join users u where a.user_id = u.id ");
             return createAdsFromResults(rs);
         } catch (SQLException e) {
             throw new RuntimeException("Error retrieving all ads.", e);
@@ -39,14 +40,12 @@ public class MySQLAdsDao implements Ads {
     @Override
     public Long insert(Ad ad) {
 
-        String sql = "INSERT INTO ads (user_id, title, description) " +
-                "VALUES (?, ?, ?)";
-
         try {
             PreparedStatement statement = connection.prepareStatement(
-                    sql,
+                    "INSERT INTO ads(user_id, title, description) VALUES (?, ?, ?)",
                     Statement.RETURN_GENERATED_KEYS
             );
+            //bind the '?' parameters with a specific value by using their indexes:
             statement.setLong(1, ad.getUserId());
             statement.setString(2,ad.getTitle());
             statement.setString(3,ad.getDescription());
@@ -61,21 +60,15 @@ public class MySQLAdsDao implements Ads {
         }
     }
 
-    private String createInsertQuery(Ad ad) {
-        return "INSERT INTO ads(user_id, title, description) VALUES "
-            + "(" + ad.getUserId() + ", "
-            + "'" + ad.getTitle() +"', "
-            + "'" + ad.getDescription() + "')";
-    }
-
     private Ad extractAd(ResultSet rs) throws SQLException {
         return new Ad(
             rs.getLong("id"),
-            //rs.getLong("user_id"), instead:
+            //rs.getLong("user_id"), but instead create a new User:
             new User(rs.getLong("id"),
                     rs.getString("username"),
                     rs.getString("email"),
                     rs.getString("password")),
+            // then complete as normal
             rs.getString("title"),
             rs.getString("description")
         );

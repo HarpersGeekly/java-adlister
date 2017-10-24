@@ -35,7 +35,7 @@ public class RegisterServlet extends HttpServlet {
             doGet(request, response); // show the register form again
 
         } else {
-
+            // check if there's a user with that username already registered in the database:
             User existingUser = DaoFactory.getUsersDao().findByUsername(username);
             if(existingUser != null) {
                 response.sendRedirect("/register");

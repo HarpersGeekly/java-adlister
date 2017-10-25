@@ -30,7 +30,7 @@ public class MySQLAdsDao implements Ads {
             stmt = connection.createStatement();
             // need to specify all the columns because id column will be ambigous since its the same name in both tables
             ResultSet rs = stmt.executeQuery(
-                    "SELECT * FROM ads a inner join users u where a.user_id = u.id ");
+                    "SELECT * FROM ads a inner join users u ON a.user_id = u.id ");
             return createAdsFromResults(rs);
         } catch (SQLException e) {
             throw new RuntimeException("Error retrieving all ads.", e);
@@ -53,6 +53,21 @@ public class MySQLAdsDao implements Ads {
             throw new RuntimeException("Error retrieving all ads.", e);
         }
     }
+
+//    @Override
+//    public List<Ad> showUsersAds(Long id) {
+//        try {
+//            PreparedStatement statement = connection.prepareStatement(
+//                    "SELECT * FROM ads a inner join users u ON a.user_id = u.id where u.id = ?"); // ????????????
+//            //bind the '?' parameters with a specific value by using their indexes:
+//            statement.setLong(1, id);
+//
+//            ResultSet rs = statement.executeQuery();
+//            return createAdsFromResults(rs);
+//        } catch (SQLException e) {
+//            throw new RuntimeException("Error retrieving all ads.", e);
+//        }
+//    }
 
     @Override
     public Long insert(Ad ad) {
@@ -99,7 +114,34 @@ public class MySQLAdsDao implements Ads {
         return ads;
     }
 
-//    public Long deleteAd(Ad ad) {
+
+    @Override
+    public List<Ad> search(String searchQuery) {
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT * FROM ads a inner join users u ON a.user_id = u.id " +
+                            "WHERE title LIKE ? OR description like ?");
+            //bind the '?' parameters with a specific value by using their indexes:
+            statement.setString(1, "%" + searchQuery + "%");
+            statement.setString(2, "%" + searchQuery + "%");
+
+            ResultSet rs = statement.executeQuery();
+            return createAdsFromResults(rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+
+
+
+
+
+
+    //    public Long deleteAd(Ad ad) {
 //        try {
 //            PreparedStatement statement = connection.prepareStatement(
 //                    "DELETE from ads (user_id, title, description) VALUES (?, ?, ?)",

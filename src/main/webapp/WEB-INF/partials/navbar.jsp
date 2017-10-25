@@ -7,13 +7,20 @@
         </div>
         <ul class="nav navbar-nav navbar-right">
 
+            <form action="/search" class="navbar-form navbar-left">
+                <div class="form-group">
+                    <input type="text" name="search" class="form-control" placeholder="Search AdLister">
+                </div>
+                <button type="submit" class="btn btn-default">Search</button>
+            </form>
+
             <c:if test="${sessionScope.user == null}">
                 <li><a href="/login">Login</a></li>
                 <li><a href="/register">Register</a></li>
             </c:if>
             <c:if test="${sessionScope.user != null}">
                 <li><a href="ads/create">Create Ad</a></li>
-                <li><a href="/profile">Profile</a></li>
+                <li><a href="/profile?id=${user.id}">Profile</a></li>
                 <li><a href="/logout">Logout</a></li>
             </c:if>
 

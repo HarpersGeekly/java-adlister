@@ -14,9 +14,9 @@ public class MySQLAdsDao implements Ads {
         try {
             DriverManager.registerDriver(new Driver());
             connection = DriverManager.getConnection(
-                Config.url,
-                Config.username,
-                Config.password
+                    Config.url,
+                    Config.username,
+                    Config.password
             );
         } catch (SQLException e) {
             throw new RuntimeException("Error connecting to the database!", e);
@@ -38,6 +38,23 @@ public class MySQLAdsDao implements Ads {
     }
 
     @Override
+    public Ad showOneAd(Long id) {
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT * FROM ads a inner join users u ON a.user_id = u.id where a.id = ?");
+            //bind the '?' parameters with a specific value by using their indexes:
+            statement.setLong(1, id);
+
+            ResultSet rs = statement.executeQuery();
+            rs.next(); //move to the first row of result set
+            return extractAd(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving all ads.", e);
+        }
+    }
+
+    @Override
     public Long insert(Ad ad) {
 
         try {
@@ -47,8 +64,8 @@ public class MySQLAdsDao implements Ads {
             );
             //bind the '?' parameters with a specific value by using their indexes:
             statement.setLong(1, ad.getUserId());
-            statement.setString(2,ad.getTitle());
-            statement.setString(3,ad.getDescription());
+            statement.setString(2, ad.getTitle());
+            statement.setString(3, ad.getDescription());
             statement.executeUpdate();
 
             ResultSet generatedKeys = statement.getGeneratedKeys();
@@ -62,15 +79,15 @@ public class MySQLAdsDao implements Ads {
 
     private Ad extractAd(ResultSet rs) throws SQLException {
         return new Ad(
-            rs.getLong("id"),
-            //rs.getLong("user_id"), but instead create a new User:
-            new User(rs.getLong("id"),
-                    rs.getString("username"),
-                    rs.getString("email"),
-                    rs.getString("password")),
-            // then complete as normal
-            rs.getString("title"),
-            rs.getString("description")
+                rs.getLong("id"),
+                //rs.getLong("user_id"), but instead create a new User:
+                new User(rs.getLong("id"),
+                        rs.getString("username"),
+                        rs.getString("email"),
+                        rs.getString("password")),
+
+                rs.getString("title"),
+                rs.getString("description")
         );
     }
 
@@ -81,4 +98,27 @@ public class MySQLAdsDao implements Ads {
         }
         return ads;
     }
+
+//    public Long deleteAd(Ad ad) {
+//        try {
+//            PreparedStatement statement = connection.prepareStatement(
+//                    "DELETE from ads (user_id, title, description) VALUES (?, ?, ?)",
+//                    Statement.RETURN_GENERATED_KEYS
+//            );
+//            statement.setLong(1, ad.getUserId());
+//            statement.setString(2, ad.getTitle());
+//            statement.setString(3, ad.getDescription());
+//            statement.executeUpdate();
+//
+//            ResultSet generatedKeys = statement.getGeneratedKeys();
+//            generatedKeys.next();
+//
+//            return generatedKeys.getLong(1);
+//
+//        } catch (SQLException e) {
+//            throw new RuntimeException("Error DELETING Ad!");
+//        }
+//    }
 }
+
+

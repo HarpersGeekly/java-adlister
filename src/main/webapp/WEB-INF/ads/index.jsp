@@ -15,8 +15,8 @@
     <ul>
         <c:forEach var="ad" items="${ads}">
             <li>
-                <%--<h2>Ad: <c:out value="${ad.id}"/></h2>--%>
-                <h1><c:out value="${ad.title}"/></h1>
+                <%--I want to get an id from a user clicking on the link:--%>
+                <a href="/show?id=${ad.id}"><h1><c:out value="${ad.title}"/></h1></a>
                 <h3><c:out value="${ad.description}"/></h3>
                 <h4>Username: <c:out value="${ad.username}"/></h4>
             </li>
@@ -26,3 +26,4 @@
 
 </body>
 </html>
+

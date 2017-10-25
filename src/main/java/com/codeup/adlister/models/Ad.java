@@ -22,9 +22,13 @@ public class Ad {
 
     public Ad(long id, User user, String title, String description) {
         this.id = id;
-        this.user = user; // allows me access to User's user.getUsername()
+        this.user = user; // allows me access to User's user.getUsername() and user.getEmail()
         this.title = title;
         this.description = description;
+    }
+
+    public String getEmail() {
+        return user.getEmail();
     }
 
     public String getUsername() {

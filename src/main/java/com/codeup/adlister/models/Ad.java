@@ -7,6 +7,14 @@ public class Ad {
     private String description;
     private User user;
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public Ad(long id, long userId, String title, String description) {
         this.id = id;
         this.userId = userId;

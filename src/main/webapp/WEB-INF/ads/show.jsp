@@ -12,7 +12,7 @@
 <div class="container">
     <h1><c:out value="${ad.title}"/></h1>
     <h3><c:out value="${ad.description}"/></h3>
-    <h4>username: <c:out value="${ad.username}"/></h4>
+    <a href="/profile?id=${ad.user.id}"><h4>username: <c:out value="${ad.username}"/></h4></a>
     <h4>email: <c:out value="${ad.email}"/></h4>
 </div>
 

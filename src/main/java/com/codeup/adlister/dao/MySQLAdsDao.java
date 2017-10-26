@@ -94,7 +94,7 @@ public class MySQLAdsDao implements Ads {
         return new Ad(
                 rs.getLong("id"),
                 //rs.getLong("user_id"), but instead create a new User:
-                new User(rs.getLong("id"),
+                new User(rs.getLong("user_id"),
                         rs.getString("username"),
                         rs.getString("email"),
                         rs.getString("password")),

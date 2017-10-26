@@ -3,52 +3,53 @@
 <html>
 <head>
     <jsp:include page="/WEB-INF/partials/head.jsp">
-        <jsp:param name="title" value="Your Profile" />
+        <jsp:param name="title" value="Your Profile"/>
     </jsp:include>
 </head>
 <body>
-<jsp:include page="/WEB-INF/partials/navbar.jsp" />
+<jsp:include page="/WEB-INF/partials/navbar.jsp"/>
 
 <div class="container">
 
-    <c:if test="${sessionScope.user != null}">
-    <h1>Welcome, <c:out value="${sessionScope.user.username}"/>!</h1>
-    <p>Your registered email is: <c:out value="${sessionScope.user.email}"/>.</p>
-    <p>You are currently logged in.</p>
-    <p> Here is a list of your ads:</p>
-    <%--<c:if test="">--%>
+    <%--=========================================== VIEWING SESSION PROFILE ======================================--%>
+
+    <c:if test="${param.id == null || sessionScope.user.id == param.id}">
+        <h2> ----------------- What it looks like for Session User: ----------------------------------</h2>
+
+        <h4>Welcome, <c:out value="${profile.username}"/>!</h4>
+        <p>Your registered email is: <c:out value="${profile.email}"/>.</p>
+        <p>You are currently logged in.</p>
+        <p> Here is a list of your ads:</p>
+        <%--<c:if test="">--%>
         <%--if there aren't ads, then write "You don't have any ads. Create an ad <here>--%>
-    <%--</c:if>--%>
+        <%--</c:if>--%>
+
+    </c:if>
+        <%--=========================================== VIEWING SOMEONE ELSES PROFILE =============================--%>
+
+    <c:if test="${param.id !=null && sessionScope.user.id != param.id}">
+        <h2> ------------- What it looks like when viewing another user's profile: ---------------</h2>
+
+        <h4> ${profile.username}'s Profile!</h4>
+        <p> Their email is: <c:out value="${profile.email}"/>.</p>
+        <p> Here is a list of ${profile.username}'s ads:</p>
+
+    </c:if>
 
     <ul>
         <c:forEach var="ad" items="${ads}">
             <li>
-                <h1><c:out value="${ad.title}"/></h1></a>
-                <h3><c:out value="${ad.description}"/></h3>
+                <h4><c:out value="${ad.title}"/></h4></a>
+                <h5><c:out value="${ad.description}"/></h5>
 
-            <c:if test="${sessionScope.user != null}">
-                <input type=button value='Edit'/>
-                <input type=button value='Delete'/>
-            </c:if>
+                <c:if test="${param.id ==null || sessionScope.user.id == param.id}">
+                    <input type=button value='Edit'/>
+                    <input type=button value='Delete'/>
+                </c:if>
             </li>
         </c:forEach>
     </ul>
-    </c:if>
 
-    <c:if test="${sessionScope.user == null}">
-    <h1> ${user.username}'s Profile!</h1>
-    <p> Their email is: <c:out value="${sessionScope.user.email}"/>.</p>
-    <p> Here is a list of ${user.username}'s ads:</p>
-
-    <ul>
-        <c:forEach var="ad" items="${ads}">
-            <li>
-                <h1><c:out value="${ad.title}"/></h1></a>
-                <h3><c:out value="${ad.description}"/></h3>
-            </li>
-        </c:forEach>
-    </ul>
-    </c:if>
 </div>
 
 </body>

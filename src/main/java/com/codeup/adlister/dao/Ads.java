@@ -9,8 +9,13 @@ public interface Ads {
     List<Ad> all();
     //show one ad
     Ad showOneAd(Long id);
+    // show users ads
+    List<Ad> showUsersAds(Long id);
     // insert a new ad and return the new ad's id
     Long insert(Ad ad);
-    // delete a new ad
+    //search bar
+    List<Ad> search(String searchQuery);
+    // delete ad
 //    Long deleteAd(Ad ad);
+    //edit ad:
 }

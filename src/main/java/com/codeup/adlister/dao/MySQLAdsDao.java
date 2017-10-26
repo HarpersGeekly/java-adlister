@@ -54,20 +54,18 @@ public class MySQLAdsDao implements Ads {
         }
     }
 
-//    @Override
-//    public List<Ad> showUsersAds(Long id) {
-//        try {
-//            PreparedStatement statement = connection.prepareStatement(
-//                    "SELECT * FROM ads a inner join users u ON a.user_id = u.id where u.id = ?"); // ????????????
-//            //bind the '?' parameters with a specific value by using their indexes:
-//            statement.setLong(1, id);
-//
-//            ResultSet rs = statement.executeQuery();
-//            return createAdsFromResults(rs);
-//        } catch (SQLException e) {
-//            throw new RuntimeException("Error retrieving all ads.", e);
-//        }
-//    }
+    @Override
+    public List<Ad> showUsersAds(Long id) {
+        try {
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT * FROM ads a inner join users u ON a.user_id = u.id where u.id = ?");
+            statement.setLong(1, id);
+            ResultSet rs = statement.executeQuery();
+            return createAdsFromResults(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving all ads.", e);
+        }
+    }
 
     @Override
     public Long insert(Ad ad) {

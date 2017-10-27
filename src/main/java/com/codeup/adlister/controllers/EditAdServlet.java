@@ -44,17 +44,21 @@ public class EditAdServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         // Difference between CreateAd and UpdateAd is that we already have a user and ad in the database...
-        // We don't need to create a new Ad. We get the parameters from our populated fields from the database shown above in doGet()
+        // We don't need to create a new Ad. We get the parameters from our form's populated fields from the database, shown above in doGet()
 
-        //User user = (User)request.getSession().getAttribute("user");
+        // No need: User user = (User)request.getSession().getAttribute("user");
+
         Ad ad = DaoFactory.getAdsDao().findById(Long.parseLong(request.getParameter("id")));
         ad.setTitle(request.getParameter("title"));
         ad.setDescription(request.getParameter("description"));
-        /*Ad ad = new Ad(
+
+        /* No need:
+            Ad ad = new Ad(
                 user.getId(),
                 request.getParameter("title"),
                 request.getParameter("description")
         );*/
+
         DaoFactory.getAdsDao().update(ad);
         response.sendRedirect("/ads");
     }

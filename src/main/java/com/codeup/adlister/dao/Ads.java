@@ -11,11 +11,17 @@ public interface Ads {
     Ad showOneAd(Long id);
     // show users ads
     List<Ad> showUsersAds(Long id);
+    // findbyID
+    Ad findById(Long id);
     // insert a new ad and return the new ad's id
     Long insert(Ad ad);
-    //search bar
-    List<Ad> search(String searchQuery);
+    // edit/replace ad with a new ad
+    void update(Ad ad);
+
+
     // delete ad
 //    Long deleteAd(Ad ad);
-    //edit ad:
+
+    //search bar
+    List<Ad> search(String searchQuery);
 }

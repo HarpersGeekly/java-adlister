@@ -43,7 +43,7 @@
                 <h5><c:out value="${ad.description}"/></h5>
 
                 <c:if test="${param.id ==null || sessionScope.user.id == param.id}">
-                    <input type=button value='Edit'/>
+                    <a href="ads/edit?id=${ad.id}"><input type=button value='Edit'/></a>
                     <input type=button value='Delete'/>
                 </c:if>
             </li>

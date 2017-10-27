@@ -68,6 +68,30 @@ public class MySQLAdsDao implements Ads {
     }
 
     @Override
+    public Ad findById(Long id) {
+        String sql = "SELECT * FROM ads WHERE id = ?";
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setLong(1, id);
+            ResultSet rs = statement.executeQuery();
+
+            if (rs.next()) {
+                return new Ad(
+                        rs.getLong("id"),
+                        rs.getLong("user_id"),
+                        rs.getString("title"),
+                        rs.getString("description")
+                );
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error finding user by id!", e);
+        }
+    }
+
+    @Override
     public Long insert(Ad ad) {
 
         try {
@@ -89,6 +113,44 @@ public class MySQLAdsDao implements Ads {
             throw new RuntimeException("Error creating a new ad.", e);
         }
     }
+
+    @Override
+    public void update(Ad ad) {
+        try {
+            PreparedStatement statement = connection.prepareStatement(
+                    "UPDATE ads SET title = ?, description = ? WHERE id= ?"
+            );
+            //bind the '?' parameters with a specific value by using their indexes:
+            statement.setString(1, ad.getTitle());
+            statement.setString(2, ad.getDescription());
+            statement.setLong(3, ad.getId());
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error replacing an ad.", e);
+        }
+    }
+
+    //    public Long deleteAd(Ad ad) {
+//        try {
+//            PreparedStatement statement = connection.prepareStatement(
+//                    "DELETE from ads (user_id, title, description) VALUES (?, ?, ?)",
+//                    Statement.RETURN_GENERATED_KEYS
+//            );
+//            statement.setLong(1, ad.getUserId());
+//            statement.setString(2, ad.getTitle());
+//            statement.setString(3, ad.getDescription());
+//            statement.executeUpdate();
+//
+//            ResultSet generatedKeys = statement.getGeneratedKeys();
+//            generatedKeys.next();
+//
+//            return generatedKeys.getLong(1);
+//
+//        } catch (SQLException e) {
+//            throw new RuntimeException("Error DELETING Ad!");
+//        }
+//    }
 
     private Ad extractAd(ResultSet rs) throws SQLException {
         return new Ad(
@@ -134,31 +196,6 @@ public class MySQLAdsDao implements Ads {
 
 
 
-
-
-
-
-
-    //    public Long deleteAd(Ad ad) {
-//        try {
-//            PreparedStatement statement = connection.prepareStatement(
-//                    "DELETE from ads (user_id, title, description) VALUES (?, ?, ?)",
-//                    Statement.RETURN_GENERATED_KEYS
-//            );
-//            statement.setLong(1, ad.getUserId());
-//            statement.setString(2, ad.getTitle());
-//            statement.setString(3, ad.getDescription());
-//            statement.executeUpdate();
-//
-//            ResultSet generatedKeys = statement.getGeneratedKeys();
-//            generatedKeys.next();
-//
-//            return generatedKeys.getLong(1);
-//
-//        } catch (SQLException e) {
-//            throw new RuntimeException("Error DELETING Ad!");
-//        }
-//    }
 }
 
 

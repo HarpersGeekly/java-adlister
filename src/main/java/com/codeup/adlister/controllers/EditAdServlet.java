@@ -30,7 +30,7 @@ public class EditAdServlet extends HttpServlet {
             DaoFactory.getAdsDao().findById(id);
 
             //show that ad in the view.
-            Ad ad = DaoFactory.getAdsDao().showOneAd(id);
+            Ad ad = DaoFactory.getAdsDao().findById(id);
             //set the attribute used in the view:
             request.setAttribute("ad", ad);
             // The edit.jsp form pre-populates with: "value=${ad.title}" value="${ad.description}, and HIDDEN ${ad.id}
@@ -60,6 +60,6 @@ public class EditAdServlet extends HttpServlet {
         );*/
 
         DaoFactory.getAdsDao().update(ad);
-        response.sendRedirect("/ads");
+        response.sendRedirect("/profile");
     }
 }

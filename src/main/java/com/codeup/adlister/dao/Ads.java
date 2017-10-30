@@ -20,7 +20,7 @@ public interface Ads {
 
 
     // delete ad
-//    Long deleteAd(Ad ad);
+    void deleteAd(Long id);
 
     //search bar
     List<Ad> search(String searchQuery);

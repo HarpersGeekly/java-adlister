@@ -11,10 +11,10 @@
     <h1>Edit Ad</h1>
     <form action="/ads/edit" method="post">
 
-        <%--Hidden, needed for request:--%>
+        <%--Hidden, but needed for the table request:--%>
         <input id="id" name="id" type="hidden" value="${ad.id}">
 
-        <%--Seen:--%>
+        <%--What is seen:--%>
         <div class="form-group">
             <label for="title">Title</label>
             <input id="title" name="title" class="form-control" type="text" value="${ad.title}">
@@ -25,6 +25,14 @@
         </div>
         <input type="submit" class="btn btn-block btn-primary">
     </form>
+
+    <%--delete button--%>
+    <form action="/ads/delete" method="post">
+        <%--Hidden, but needed for the table request:--%>
+        <input type="hidden" name="id" value="${ad.id}">
+        <button type="submit" class="btn btn-block btn-danger">Delete</button>
+    </form>
+
 </div>
 </body>
 </html>

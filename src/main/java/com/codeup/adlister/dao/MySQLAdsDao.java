@@ -50,7 +50,7 @@ public class MySQLAdsDao implements Ads {
             rs.next(); //move to the first row of result set
             return extractAd(rs);
         } catch (SQLException e) {
-            throw new RuntimeException("Error retrieving all ads.", e);
+            throw new RuntimeException("Error retrieving one ad.", e);
         }
     }
 
@@ -131,26 +131,20 @@ public class MySQLAdsDao implements Ads {
         }
     }
 
-    //    public Long deleteAd(Ad ad) {
-//        try {
-//            PreparedStatement statement = connection.prepareStatement(
-//                    "DELETE from ads (user_id, title, description) VALUES (?, ?, ?)",
-//                    Statement.RETURN_GENERATED_KEYS
-//            );
-//            statement.setLong(1, ad.getUserId());
-//            statement.setString(2, ad.getTitle());
-//            statement.setString(3, ad.getDescription());
-//            statement.executeUpdate();
-//
-//            ResultSet generatedKeys = statement.getGeneratedKeys();
-//            generatedKeys.next();
-//
-//            return generatedKeys.getLong(1);
-//
-//        } catch (SQLException e) {
-//            throw new RuntimeException("Error DELETING Ad!");
-//        }
-//    }
+    @Override
+    public void deleteAd(Long id) {
+        try {
+            PreparedStatement statement = connection.prepareStatement(
+                    "DELETE FROM ads WHERE id= ?"
+            );
+
+            statement.setLong(1, id);
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error DELETING Ad!", e);
+        }
+    }
 
     private Ad extractAd(ResultSet rs) throws SQLException {
         return new Ad(

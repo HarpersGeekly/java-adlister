@@ -18,7 +18,7 @@
                 <%--I want to get an id from a user clicking on the link:--%>
                 <a href="/show?id=${ad.id}"><h2><c:out value="${ad.title}"/></h2></a>
                 <h3><c:out value="${ad.description}"/></h3>
-                <h4>Username: <c:out value="${ad.username}"/></h4>
+                <h5>Username: <c:out value="${ad.username}"/></h5>
             </li>
         </c:forEach>
     </ul>

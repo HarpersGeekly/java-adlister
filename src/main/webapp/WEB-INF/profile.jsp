@@ -14,7 +14,7 @@
     <%--=========================================== VIEWING SESSION PROFILE ======================================--%>
 
     <c:if test="${param.id == null || sessionScope.user.id == param.id}">
-        <h2> ----------------- What it looks like for Session User: ----------------------------------</h2>
+        <%--<h2> ----------------- What it looks like for Session User: ----------------------------------</h2>--%>
 
         <h4>Welcome, <c:out value="${profile.username}"/>!</h4>
         <p>Your registered email is: <c:out value="${profile.email}"/>.</p>
@@ -28,7 +28,7 @@
         <%--=========================================== VIEWING SOMEONE ELSES PROFILE =============================--%>
 
     <c:if test="${param.id !=null && sessionScope.user.id != param.id}">
-        <h2> ------------- What it looks like when viewing another user's profile: ---------------</h2>
+        <%--<h2> ------------- What it looks like when viewing another user's profile: ---------------</h2>--%>
 
         <h4> ${profile.username}'s Profile!</h4>
         <p> Their email is: <c:out value="${profile.email}"/>.</p>
@@ -44,7 +44,6 @@
 
                 <c:if test="${param.id ==null || sessionScope.user.id == param.id}">
                     <a href="ads/edit?id=${ad.id}"><input type=button value='Edit'/></a>
-                    <input type=button value='Delete'/>
                 </c:if>
             </li>
         </c:forEach>

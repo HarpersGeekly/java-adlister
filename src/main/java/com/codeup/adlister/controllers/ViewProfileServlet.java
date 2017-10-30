@@ -40,21 +40,3 @@ public class ViewProfileServlet extends HttpServlet {
         request.getRequestDispatcher("/WEB-INF/profile.jsp").forward(request, response);
     }
 }
-
-// If I have parameter in the query string ID, then query the databasea, pass that user to the view
-//        if (Long id = Long.parseLong(request.getParameter("id")) {
-//
-//                // This is my Profile:
-//                User user = (User)request.getSession().getAttribute("user");
-//                request.setAttribute("ads", DaoFactory.getAdsDao().showUsersAds(user.getId()));
-//
-//                request.setAttribute("user", user);
-//
-//                } else {
-//
-//                Long id = Long.parseLong(request.getParameter("id"));
-//                request.setAttribute("ads", DaoFactory.getAdsDao().showUsersAds(id));
-//                }
-//
-//                request.getRequestDispatcher("/WEB-INF/profile.jsp").forward(request, response);
-//                }

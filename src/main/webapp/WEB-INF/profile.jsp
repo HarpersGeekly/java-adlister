@@ -16,7 +16,7 @@
     <c:if test="${param.id == null || sessionScope.user.id == param.id}">
         <%--<h2> ----------------- What it looks like for Session User: ----------------------------------</h2>--%>
 
-        <h4>Welcome, <c:out value="${profile.username}"/>!</h4>
+        <h4>Welcome, <c:out value="${profile.username}"/>!</h4><a href="/profile/edit?id=${user.id}">edit profile</a>
         <p>Your registered email is: <c:out value="${profile.email}"/>.</p>
         <p>You are currently logged in.</p>
         <p> Here is a list of your ads:</p>

@@ -26,6 +26,61 @@ public class MySQLUsersDao implements Users {
     }
 
     @Override
+    public Long insert(User user) {
+        //RECIPE FOR THE INSERT
+
+        //write the sql for the insert
+        String sql = "INSERT INTO users (username, email, password) " +
+                "VALUES (?, ?, ?)";
+
+        try {
+            //create a prepared statement with the insert, request the generated keys
+            PreparedStatement statement = connection.prepareStatement(sql,
+                    Statement.RETURN_GENERATED_KEYS
+            );
+            //bind the parameters with their values '?' from the sql query
+            statement.setString(1, user.getUsername());
+            statement.setString(2, user.getEmail());
+            statement.setString(3, user.getPassword());
+
+            //execute the query
+            statement.executeUpdate();
+
+            //return the generated key value
+            ResultSet rs = statement.getGeneratedKeys();
+            rs.next();
+            return rs.getLong(1);
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error inserting a user!", e);
+        }
+    }
+
+    @Override
+    public User findById(Long id) {
+        String sql = "SELECT * FROM users WHERE id = ?";
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setLong(1, id);
+            ResultSet rs = statement.executeQuery();
+
+            if (rs.next()) {
+                return new User(
+                        rs.getLong("id"),
+                        rs.getString("username"),
+                        rs.getString("email"),
+                        rs.getString("password")
+                );
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error finding user by id!", e);
+        }
+    }
+
+    @Override
     public User findByUsername(String username) {
         //RECIPE FOR ANY FINDER:
 
@@ -56,57 +111,36 @@ public class MySQLUsersDao implements Users {
     }
 
     @Override
-    public User findById(Long id) {
-        String sql = "SELECT * FROM users WHERE id = ?";
+    public void updateUser(User user) {
 
         try {
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setLong(1, id);
-            ResultSet rs = statement.executeQuery();
+            PreparedStatement statement = connection.prepareStatement
+                    ("UPDATE users SET username = ?, email = ?, password = ? WHERE id = ?"
+                    );
+            statement.setString(1, user.getUsername());
+            statement.setString(2, user.getEmail());
+            statement.setString(3, user.getPassword());
+            statement.setLong(4, user.getId());
+            statement.executeUpdate();
 
-            if (rs.next()) {
-                return new User(
-                        rs.getLong("id"),
-                        rs.getString("username"),
-                        rs.getString("email"),
-                        rs.getString("password")
-                );
-            } else {
-                return null;
-            }
         } catch (SQLException e) {
-            throw new RuntimeException("Error finding user by id!", e);
+            throw new RuntimeException("Error updating user", e);
         }
     }
 
     @Override
-    public Long insert(User user) {
-        //RECIPE FOR THE INSERT
-
-        //write the sql for the insert
-        String sql = "INSERT INTO users (username, email, password) " +
-                "VALUES (?, ?, ?)";
-
+    public void deleteUser(User user) {
         try {
-        //create a prepared statement with the insert, request the generated keys
-            PreparedStatement statement = connection.prepareStatement(sql,
-                    Statement.RETURN_GENERATED_KEYS
+            PreparedStatement statement = connection.prepareStatement(
+                    "DELETE FROM users WHERE id= ?"
             );
-        //bind the parameters with their values '?' from the sql query
-            statement.setString(1, user.getUsername());
-            statement.setString(2, user.getEmail());
-            statement.setString(3, user.getPassword());
 
-        //execute the query
+            statement.setLong(1, user.getId());
             statement.executeUpdate();
 
-        //return the generated key value
-            ResultSet rs = statement.getGeneratedKeys();
-            rs.next();
-            return rs.getLong(1);
-
         } catch (SQLException e) {
-            throw new RuntimeException("Error inserting a user!", e);
+            throw new RuntimeException("Error DELETING user", e);
         }
     }
+
 }

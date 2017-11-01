@@ -21,7 +21,13 @@ public class Ad {
         this.title = title;
         this.description = description;
     }
-    
+
+    public Ad(long userId, String title, String description) {
+        this.userId = userId;
+        this.title = title;
+        this.description = description;
+    }
+
     public Ad(long id, User user, String title, String description) {
         this.id = id;
         this.user = user; // allows me access to User's user.getUsername() and user.getEmail()

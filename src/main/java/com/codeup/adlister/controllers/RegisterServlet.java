@@ -13,7 +13,8 @@ import java.io.IOException;
 @WebServlet(name = "controllers.RegisterServlet", urlPatterns = "/register")
 public class RegisterServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // show the registration form
+        // show the registration form for this servlet (there's other servlets using this form too) EditUserServlet, and DeleteServlet
+        request.setAttribute("action", "/register");
         request.getRequestDispatcher("/WEB-INF/users/register.jsp").forward(request, response);
     }
 

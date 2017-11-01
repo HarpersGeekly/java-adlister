@@ -8,4 +8,6 @@ public interface Users {
     User findByUsername(String username);
     Long insert(User user);
     User findById(Long id);
+    void updateUser(User user);
+    void deleteUser(User user);
 }

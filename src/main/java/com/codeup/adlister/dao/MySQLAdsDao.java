@@ -175,7 +175,7 @@ public class MySQLAdsDao implements Ads {
         try {
             PreparedStatement statement = connection.prepareStatement(
                     "SELECT * FROM ads a inner join users u ON a.user_id = u.id " +
-                            "WHERE title LIKE ? OR description like ?");
+                            "WHERE title LIKE ? OR description LIKE ?");
             //bind the '?' parameters with a specific value by using their indexes:
             statement.setString(1, "%" + searchQuery + "%");
             statement.setString(2, "%" + searchQuery + "%");

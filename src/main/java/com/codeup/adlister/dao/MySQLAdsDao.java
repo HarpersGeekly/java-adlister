@@ -25,12 +25,11 @@ public class MySQLAdsDao implements Ads {
 
     @Override
     public List<Ad> all() {
-        Statement stmt = null;
+        PreparedStatement stmt = null;
         try {
-            stmt = connection.createStatement();
+            stmt = connection.prepareStatement("SELECT * FROM ads a inner join users u ON a.user_id = u.id ");
             // need to specify all the columns because id column will be ambigous since its the same name in both tables
-            ResultSet rs = stmt.executeQuery(
-                    "SELECT * FROM ads a inner join users u ON a.user_id = u.id ");
+            ResultSet rs = stmt.executeQuery();
             return createAdsFromResults(rs);
         } catch (SQLException e) {
             throw new RuntimeException("Error retrieving all ads.", e);
@@ -191,5 +190,3 @@ public class MySQLAdsDao implements Ads {
 
 
 }
-
-

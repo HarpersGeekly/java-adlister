@@ -24,7 +24,7 @@ public class RegisterServlet extends HttpServlet {
         String email = request.getParameter("email");
         String passwordConfirmation = request.getParameter("confirm_password");
 
-        String hashedPassword = Password.hash(password);
+//        String hashedPassword = Password.hash(password);
 
         // ensure the submitted information is valid
         boolean inputHasErrors = username.isEmpty()
@@ -42,14 +42,22 @@ public class RegisterServlet extends HttpServlet {
                 response.sendRedirect("/register");
                 return;
             }
-            // create a new user based off of the submitted information
-            // a new user will have a 0 id..
-            User user = new User(0, username, email, hashedPassword);
-            // but we can set the id now for a newly inserted user.
+            // create a new user based off of the submitted information:
+//                  (If I used the other User constructor with long id in it,
+//                  then i'd make the id parameter "0" below...kinda weird
+
+//                    User user = new User(0, username, email, password);
+//                         and set the id for a newly inserted user:
+//                    Long id = DaoFactory.getUsersDao().insert(user);
+//                    user.setId(id);
+//
+            // But, I'm going to use the other constructor with only username, email, and password in it.
+            // When it's inserted in the database, the id auto increments.
+            User user = new User(username, email, password);
             Long id = DaoFactory.getUsersDao().insert(user);
             user.setId(id);
-            // if a user was successfully created, send them to their profile
-            //start a new session for the newly registered user
+            // If a user was successfully created, send them to their profile:
+            // start a new session for the newly registered user
             request.getSession().setAttribute("user", user);
             response.sendRedirect("/profile");
         }

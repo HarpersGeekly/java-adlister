@@ -40,7 +40,7 @@
     <ul>
         <c:forEach var="ad" items="${ads}">
             <li>
-                <h4><c:out value="${ad.title}"/></h4></a>
+                <h4><c:out value="${ad.title}"/></h4>
                 <h5><c:out value="${ad.description}"/></h5>
 
                 <c:if test="${param.id ==null || sessionScope.user.id == param.id}">

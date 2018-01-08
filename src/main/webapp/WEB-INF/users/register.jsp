@@ -28,6 +28,14 @@
             <label for="username">Username</label>
             <input id="username" name="username" class="form-control" type="text" maxlength="30" value=${user.username}>
         </div>
+            <c:if test="${sessionScope.existingUser != null}">
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    <strong>That username already exists</strong>
+                    <%--<button type="button" class="close" data-dismiss="alert" aria-label="Close">--%>
+                        <%--<span aria-hidden="true">&times;</span>--%>
+                    <%--</button>--%>
+                </div>
+            </c:if>
         <div class="form-group">
             <label for="email">Email</label>
             <input id="email" name="email" class="form-control" type="text" value=${user.email}>

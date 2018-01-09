@@ -39,7 +39,7 @@ public class RegisterServlet extends HttpServlet {
             // check if there's a user with that username already registered in the database:
             User existingUser = DaoFactory.getUsersDao().findByUsername(username);
             if(existingUser != null) {
-                request.getSession().setAttribute("existingUser", existingUser);
+                request.getSession().setAttribute("user", existingUser);
                 response.sendRedirect("/register");
                 return;
             }

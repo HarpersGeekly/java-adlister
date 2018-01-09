@@ -10,6 +10,7 @@ public class User {
 
     public User() {}
 
+    // used for creating a user
     public User(String username, String email, String password) {
         this.username = username;
         this.email = email;
@@ -17,13 +18,12 @@ public class User {
         setPassword(password);
     }
 
-
+    // used for retrieving a user from database
     public User(long id, String username, String email, String password) {
         this.id = id;
         this.username = username;
         this.email = email;
-//        this.password = password;
-        setPassword(password); // set the hashed password (see below setter)
+        this.password = password;
     }
 
     public long getId() {

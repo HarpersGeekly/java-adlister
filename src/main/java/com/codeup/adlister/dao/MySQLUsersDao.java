@@ -85,7 +85,7 @@ public class MySQLUsersDao implements Users {
         //RECIPE FOR ANY FINDER:
 
         //write the sql query:
-        String sql = "SELECT * FROM users WHERE username = ?";
+        String sql = "SELECT * FROM users WHERE username = ? LIMIT 1";
 
         try {
             //create a prepared statement and pass the sql:

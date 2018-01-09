@@ -28,7 +28,7 @@
             <label for="username">Username</label>
             <input id="username" name="username" class="form-control" type="text" maxlength="30" value=${user.username}>
         </div>
-            <c:if test="${sessionScope.existingUser != null}">
+            <c:if test="${sessionScope.user != null}">
                 <div class="alert alert-danger alert-dismissible" role="alert">
                     <strong>That username already exists</strong>
                     <%--<button type="button" class="close" data-dismiss="alert" aria-label="Close">--%>

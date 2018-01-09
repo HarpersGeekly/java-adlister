@@ -182,8 +182,7 @@ public class MySQLAdsDao implements Ads {
             ResultSet rs = statement.executeQuery();
             return createAdsFromResults(rs);
         } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
+            throw new RuntimeException("Error searching the AdLister", e);
         }
     }
 

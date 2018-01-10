@@ -10,7 +10,8 @@
 <jsp:include page="/WEB-INF/partials/navbar.jsp" />
 
 <div class="container">
-    <h2>Here Are all the ads!</h2>
+    <h1>Welcome to AdLister!</h1>
+    <h2>Here are all the ads:</h2>
 
     <ul>
         <c:forEach var="ad" items="${ads}">

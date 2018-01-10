@@ -3,7 +3,7 @@
 <html>
 <head>
     <jsp:include page="/WEB-INF/partials/head.jsp">
-        <jsp:param name="title" value="Register Here" />
+        <jsp:param name="title" value="Register" />
     </jsp:include>
 </head>
 <body>
@@ -14,12 +14,8 @@
         <h1>Welcome! Please Register Below:</h1>
     </c:if>
 
-    <c:if test="${sessionScope.user != null}">
-        <h1>Edit your profile below:</h1>
-    </c:if>
-
-<%--since I'm using the same register form with THREE servlets (register, editUser, deleteUser) use ${action} and not "/register"--%>
-    <form action="${action}" method="POST">
+<%--since I'm using the same register form with THREE servlets (Register, EditUser, DeleteUser) use ${action} and not "/register"--%>
+    <form action="/register" method="POST">
 
         <%--Hidden, but needed for the table request:--%>
         <input id="id" name="id" type="hidden" value="${user.id}">
@@ -28,7 +24,7 @@
             <label for="username">Username</label>
             <input id="username" name="username" class="form-control" type="text" maxlength="30" value=${user.username}>
         </div>
-            <c:if test="${sessionScope.user != null}">
+            <c:if test="${sessionScope.user != null} && ${sessionScope.usernameExists}">
                 <div class="alert alert-danger alert-dismissible" role="alert">
                     <strong>That username already exists</strong>
                     <%--<button type="button" class="close" data-dismiss="alert" aria-label="Close">--%>

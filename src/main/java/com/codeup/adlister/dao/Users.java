@@ -9,5 +9,6 @@ public interface Users {
     Long insert(User user);
     User findById(Long id);
     void updateUser(User user);
+    void updatePassword(User user);
     void deleteUser(User user);
 }

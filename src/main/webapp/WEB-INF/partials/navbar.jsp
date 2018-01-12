@@ -15,8 +15,8 @@
             </form>
 
             <c:if test="${sessionScope.user == null}">
-                <li><a href="/login">Login</a></li>
                 <li><a href="/register">Register</a></li>
+                <li><a href="/login">Login</a></li>
             </c:if>
             <c:if test="${sessionScope.user != null}">
                 <li><a href="/ads">List of Ads</a></li>

@@ -20,6 +20,8 @@
                 <a href="/show?id=${ad.id}"><h2><c:out value="${ad.title}"/></h2></a>
                 <h3><c:out value="${ad.description}"/></h3>
                 <h5>Username: <c:out value="${ad.username}"/></h5>
+                created on:
+                updated on:
             </li>
         </c:forEach>
     </ul>

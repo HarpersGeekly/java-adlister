@@ -41,12 +41,14 @@
     <ul>
         <c:forEach var="ad" items="${ads}">
             <li>
+                created on: make this happen!
                 <h4><c:out value="${ad.title}"/></h4>
                 <h5><c:out value="${ad.description}"/></h5>
 
                 <c:if test="${param.id == null || sessionScope.user.id == param.id}">
                     <a href="ads/edit?id=${ad.id}"><input type=button value='Edit'/></a>
                 </c:if>
+                updated on: make this happen!
             </li>
         </c:forEach>
     </ul>

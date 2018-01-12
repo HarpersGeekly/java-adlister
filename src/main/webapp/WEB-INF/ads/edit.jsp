@@ -23,7 +23,7 @@
             <label for="description">Description</label>
             <textarea id="description" name="description" class="form-control" type="text">${ad.description}</textarea>
         </div>
-        <input type="submit" class="btn btn-block btn-primary">
+        <input type="submit" class="btn btn-block btn-primary" value="Update Ad">
     </form>
 
     <%--delete button--%>

@@ -18,25 +18,65 @@ public class LoginServlet extends HttpServlet {
             response.sendRedirect("/profile");
             return;
         }
-        request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/users/login.jsp").forward(request, response);
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        // make sure we find a user with that username
-        User user = DaoFactory.getUsersDao().findByUsername(username);
-        // check the submitted password against what you have in your database (the hashedPassword from LoginServlet is now in DB, user.getPassword())
-        boolean validAttempt = (user != null && Password.check(password, user.getPassword()));
 
-        if (validAttempt) {
+        request.setAttribute("username", username);  //sticky form value
+        request.setAttribute("password", password);  //sticky form value
+
+        User user = DaoFactory.getUsersDao().findByUsername(username); // make sure we find a user with that username
+
+        boolean userExists = (user != null);
+        boolean validAttempt = (user != null && Password.check(password, user.getPassword()));
+        boolean usernameEmpty = username.isEmpty();
+        boolean passwordEmpty = password.isEmpty();
+
+        if (userExists && !passwordEmpty) {
+            boolean passwordCorrect = Password.check(password, user.getPassword()); // check the submitted password against what I have in the database
+            // incorrect password:
+            if (!passwordCorrect) {
+                request.setAttribute("passwordIncorrect", passwordCorrect);
+                doGet(request, response); // show the register form again
+            }
+        }
+        // both empty...
+        if (usernameEmpty && passwordEmpty) {
+            request.setAttribute("usernameEmpty", usernameEmpty);
+            request.setAttribute("passwordEmpty", passwordEmpty);
+            doGet(request, response); // show the register form again
+            return;
+        }
+
+        //one or the other...
+        if (!usernameEmpty && passwordEmpty) {
+            request.setAttribute("passwordEmpty", passwordEmpty);
+            doGet(request, response);
+            return;
+        }
+
+        if (usernameEmpty && !passwordEmpty) {
+            request.setAttribute("usernameEmpty", usernameEmpty);
+            doGet(request, response);
+            return;
+        }
+
+        // username doesn't exist:
+        if (!userExists) {
+            request.setAttribute("userNotExist", userExists);
+            return;
+        }
+
+        if (validAttempt ) {
             // store the logged in user object in the session
             request.getSession().setAttribute("user", user); // changed ("user", username) to ("user", user);
             response.sendRedirect("/profile");
+
         } else {
-            response.sendRedirect("/login");
+            request.getRequestDispatcher("/WEB-INF/users/login.jsp").forward(request, response);
         }
-
-
     }
 }

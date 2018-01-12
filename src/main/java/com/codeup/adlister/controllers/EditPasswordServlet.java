@@ -13,14 +13,13 @@ import java.io.IOException;
 /**
  * Created by RyanHarper on 1/11/18.
  */
-@WebServlet(name = "ChangePasswordServlet", urlPatterns = "/profile/editPassword")
-public class ChangePasswordServlet extends HttpServlet {
+@WebServlet(name = "EditPasswordServlet", urlPatterns = "/profile/editPassword")
+public class EditPasswordServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if(request.getSession().getAttribute("user") == null) {
             response.sendRedirect("/login");
         }
-
         //get user id from parameter.
         Long id = Long.parseLong(request.getParameter("id"));
 
@@ -29,8 +28,6 @@ public class ChangePasswordServlet extends HttpServlet {
         request.setAttribute("user", user);
         // show the .jsp
         request.getRequestDispatcher("/WEB-INF/users/editPassword.jsp").forward(request, response);
-
-
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -71,8 +68,6 @@ public class ChangePasswordServlet extends HttpServlet {
             doGet(request, response);
             return;
         }
-
-
         // Update the user in the database with the newly entered parameters:
             User user = DaoFactory.getUsersDao().findById(id);
 

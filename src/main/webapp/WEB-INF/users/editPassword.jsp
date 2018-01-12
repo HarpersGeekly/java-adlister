@@ -25,13 +25,13 @@
         <input id="id" name="id" type="hidden" value="${user.id}">
 
         <div class="form-group">
-            <label for="password">Password</label>
+            <label for="password">New Password</label>
             <input id="password" name="password" class="form-control" type="text">
         </div>
 
         <div class="form-group">
             <label for="confirm_password">Confirm Password</label>
-            <input id="confirm_password" name="confirm_password" class="form-control" type="text">
+            <input id="confirm_password" name="confirm_password" class="form-control" type="password">
         </div>
         <c:if test="${passwordsNotMatch}">
             <div class="alert alert-danger alert-dismissible" role="alert">

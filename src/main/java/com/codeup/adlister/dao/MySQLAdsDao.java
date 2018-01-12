@@ -27,8 +27,9 @@ public class MySQLAdsDao implements Ads {
     public List<Ad> all() {
         PreparedStatement stmt = null;
         try {
-            stmt = connection.prepareStatement("SELECT * FROM ads a inner join users u ON a.user_id = u.id ");
-            // need to specify all the columns because id column will be ambigous since its the same name in both tables
+            stmt = connection.prepareStatement("SELECT * FROM ads a inner join users u ON a.user_id = u.id");
+            // I'm joining because on my index page for each ad I show what user that belong to. Starts at model Ad, add a User, go from there.
+            // need to specify all the user_id column because id columns will be ambiguous since its the same name in both tables
             ResultSet rs = stmt.executeQuery();
             return createAdsFromResults(rs);
         } catch (SQLException e) {

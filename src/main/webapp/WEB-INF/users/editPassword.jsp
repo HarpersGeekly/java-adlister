@@ -51,6 +51,7 @@
         </c:if>
 
         <input type="submit" class="btn btn-primary btn-block" value="Update Password">
+        <a href="/profile" type="submit" class="btn btn-block btn-warning">Nevermind</a>
 
     </form>
 

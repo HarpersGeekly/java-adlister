@@ -2,11 +2,14 @@ package com.codeup.adlister.models;
 
 import com.codeup.adlister.util.Password;
 
+import java.time.LocalDateTime;
+
 public class User {
     private long id;
     private String username;
     private String email;
     private String password;
+    private LocalDateTime joinDate;
 
     public User() {}
 
@@ -57,5 +60,13 @@ public class User {
     public void setPassword(String password) {
 //        this.password = password;
         this.password = Password.hash(password); // neat place to hash a password!
+    }
+
+    public LocalDateTime getJoinDate() {
+        return joinDate;
+    }
+
+    public void setJoinDate(LocalDateTime joinDate) {
+        this.joinDate = joinDate;
     }
 }

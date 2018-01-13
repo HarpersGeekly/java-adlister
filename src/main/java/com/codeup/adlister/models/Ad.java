@@ -1,11 +1,15 @@
 package com.codeup.adlister.models;
 
+import java.time.LocalDateTime;
+
 public class Ad {
     private long id;
     private long userId;
     private String title;
     private String description;
     private User user;
+    private LocalDateTime createDate;
+    private LocalDateTime updateDate;
 
     public User getUser() {
         return user;
@@ -76,4 +80,19 @@ public class Ad {
     }
 
 
+    public LocalDateTime getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(LocalDateTime createDate) {
+        this.createDate = createDate;
+    }
+
+    public LocalDateTime getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(LocalDateTime updateDate) {
+        this.updateDate = updateDate;
+    }
 }

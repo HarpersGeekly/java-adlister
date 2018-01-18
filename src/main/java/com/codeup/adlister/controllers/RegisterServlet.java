@@ -1,7 +1,6 @@
 package com.codeup.adlister.controllers;
 import com.codeup.adlister.dao.DaoFactory;
 import com.codeup.adlister.models.User;
-import com.codeup.adlister.util.Password;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,12 +8,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @WebServlet(name = "controllers.RegisterServlet", urlPatterns = "/register")
 public class RegisterServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // show the registration form for this servlet (there's other servlets using this form too) EditUserServlet, and DeleteServlet
-        request.setAttribute("action", "/register");
         request.getRequestDispatcher("/WEB-INF/users/register.jsp").forward(request, response);
     }
 

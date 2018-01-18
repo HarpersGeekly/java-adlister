@@ -19,6 +19,7 @@
 
         <%--Hidden, but needed for the table request:--%>
         <input id="id" name="id" type="hidden" value="${user.id}">
+        <input id="joinDate" name="joinDate" type="hidden" value="${user.joinDate}">
 
         <div class="form-group">
             <label for="username">Username</label>

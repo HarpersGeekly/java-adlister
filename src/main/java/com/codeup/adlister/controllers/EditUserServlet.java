@@ -27,13 +27,11 @@ public class EditUserServlet extends HttpServlet {
             // get the id from the url, given to us on the Edit button on profile.jsp
             // <a href="/register?id=${user.id}">edit profile</a>
             Long id = Long.parseLong(request.getParameter("id"));
+//            Long id = request.getSession().getAttribute("user"); if you don't have an id in the url
             // find the user in the users table with that id...
-            DaoFactory.getUsersDao().findById(id);
-            //show that user in the view and set the attribute to be used in the view.
+            // and show that user in the view and set the attribute to be used in the view.
             User user = DaoFactory.getUsersDao().findById(id);
             request.setAttribute("user", user);
-
-            request.setAttribute("action", "/profile/edit");
             request.getRequestDispatcher("/WEB-INF/users/editUser.jsp")
                     .forward(request, response);
         }
@@ -49,44 +47,46 @@ public class EditUserServlet extends HttpServlet {
         Long id = Long.parseLong(request.getParameter("id"));
         String username = request.getParameter("username");
         String email = request.getParameter("email");
+        User existingUser = DaoFactory.getUsersDao().findById(id); // get the existing user by id...
+
+        boolean usernameIsEmpty = username.isEmpty();
+        boolean emailIsEmpty = email.isEmpty();
+
+        if (usernameIsEmpty) {
+            request.setAttribute("usernameIsEmpty", usernameIsEmpty);
+            doGet(request, response);
+            return;
+        }
+
+        if (emailIsEmpty) {
+            request.setAttribute("emailIsEmpty", emailIsEmpty);
+            doGet(request, response);
+            return;
+        }
 
         // after a user submits the form...
         // check if a username already exists in the database for the newly edited name.
         // But also handle the issue of when a user doesn't change their name.
 
-        User existingUser = DaoFactory.getUsersDao().findById(id); // get the existing user by id...
         if (!existingUser.getUsername().equals(username)) { // if the username on the pre-populated form doesn't equal the user found in the database
+
             User updatedUser = DaoFactory.getUsersDao().findByUsername(username); // then that must be an updated name, so check if that updated name is in the database.
+
             if (updatedUser != null) { // if there's someone by that username already in the database...
-                System.out.println("existing user error");
-                request.getSession().setAttribute("usernameExists", updatedUser);
-                request.getRequestDispatcher("/WEB-INF/users/editUser.jsp") // show the edit form again
-                        .forward(request, response);
+                request.getSession().setAttribute("updatedUser", updatedUser);
+                doGet(request, response); // show the edit form again
                 return;
             }
         }
 
-        // Update the user in the database with the newly entered parameters:
-        User user = DaoFactory.getUsersDao().findById(Long.parseLong(request.getParameter("id")));
 
-        user.setUsername(username);
-        user.setEmail(email);
-        DaoFactory.getUsersDao().updateUser(user);
-        response.sendRedirect("/profile");
+            // Update the user in the database with the newly entered parameters:
+            User user = DaoFactory.getUsersDao().findById(Long.parseLong(request.getParameter("id")));
+
+            user.setUsername(username);
+            user.setEmail(email);
+            DaoFactory.getUsersDao().updateUser(user);
+            request.getSession().setAttribute("user", user);
+            response.sendRedirect("/profile");
+        }
     }
-}
-
-//
-//    String password = request.getParameter("password");
-//    String passwordConfirmation = request.getParameter("confirm_password");
-//    String hashedPassword = Password.hash(password);
-//
-//    // check if the passwords match:
-//    boolean inputHasErrors = !password.equals(passwordConfirmation);
-//        if (inputHasErrors) {
-//                System.out.println("password error");
-//                request.getRequestDispatcher("/WEB-INF/users/register.jsp") // show the register form again
-//                .forward(request, response); //FORM VALIDATION will go here eventually...
-//                }
-//
-//                user.setPassword(hashedPassword);

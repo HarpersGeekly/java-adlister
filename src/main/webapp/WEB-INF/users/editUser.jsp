@@ -28,12 +28,16 @@
         <label for="username">Username</label>
         <input id="username" name="username" class="form-control" type="text" maxlength="30" value=${user.username}>
     </div>
-    <c:if test="${sessionScope.user != null} && ${sessionScope.usernameExists != null}">
+
+    <c:if test="${sessionScope.user != null} && ${usernameExists != null}">
         <div class="alert alert-danger alert-dismissible" role="alert">
-            <strong>That username already exists</strong>
-                <%--<button type="button" class="close" data-dismiss="alert" aria-label="Close">--%>
-                <%--<span aria-hidden="true">&times;</span>--%>
-                <%--</button>--%>
+            <strong>Sorry, that username is already taken</strong>
+        </div>
+    </c:if>
+
+    <c:if test="${sessionScope.user != null} && ${usernameIsEmpty}">
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <strong>You must enter a username</strong>
         </div>
     </c:if>
 
@@ -42,7 +46,14 @@
         <input id="email" name="email" class="form-control" type="text" value=${user.email}>
     </div>
 
+    <c:if test="${sessionScope.user != null} && ${emailIsEmpty}">
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <strong>You must enter an email</strong>
+        </div>
+    </c:if>
+
     <input type="submit" class="btn btn-primary btn-block" value="Update Profile">
+    <a href="/profile" type="submit" class="btn btn-warning btn-block" value="Update Profile">Nevermind</a>
 
 </form>
 

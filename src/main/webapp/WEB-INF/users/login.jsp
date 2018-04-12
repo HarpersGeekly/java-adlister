@@ -25,7 +25,7 @@
                         <%--</button>--%>
                 </div>
             </c:if>
-            <c:if test="${userNotExist != null}">
+            <c:if test="${userNotExist}">
                 <div class="alert alert-danger alert-dismissible" role="alert">
                     <strong>That username doesn't exist. Have you <a href="/register">registered?</a></strong>
                 </div>

@@ -65,8 +65,9 @@ public class LoginServlet extends HttpServlet {
         }
 
         // username doesn't exist:
-        if (!userExists) {
-            request.setAttribute("userNotExist", userExists);
+        if ((!usernameEmpty && !passwordEmpty) && !userExists) {
+            request.setAttribute("userNotExist", !userExists);
+            doGet(request, response);
             return;
         }
 

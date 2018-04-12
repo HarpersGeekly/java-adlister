@@ -8,6 +8,14 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/partials/navbar.jsp" />
+
+<% String username = request.getParameter("username");
+    if (username == null) username = "";
+    String email = request.getParameter("email");
+    if (email == null) email = "";
+%>
+
+
 <div class="container">
 
     <c:if test="${sessionScope.user == null}">
@@ -23,24 +31,29 @@
 
         <div class="form-group">
             <label for="username">Username</label>
-            <input id="username" name="username" class="form-control" type="text" maxlength="30" value=${user.username}>
+            <input id="username" name="username" class="form-control" type="text" maxlength="30" value=<%=username%>>
         </div>
-            <c:if test="${sessionScope.user != null} && ${sessionScope.usernameExists}">
-                <div class="alert alert-danger alert-dismissible" role="alert">
-                    <strong>That username already exists</strong>
-                    <%--<button type="button" class="close" data-dismiss="alert" aria-label="Close">--%>
-                        <%--<span aria-hidden="true">&times;</span>--%>
-                    <%--</button>--%>
-                </div>
-            </c:if>
+            <%--<c:if test="${sessionScope.user != null} && ${sessionScope.usernameExists}">--%>
+                <%--<div class="alert alert-danger alert-dismissible" role="alert">--%>
+                    <%--<strong>That username already exists</strong>--%>
+                    <%--&lt;%&ndash;<button type="button" class="close" data-dismiss="alert" aria-label="Close">&ndash;%&gt;--%>
+                        <%--&lt;%&ndash;<span aria-hidden="true">&times;</span>&ndash;%&gt;--%>
+                    <%--&lt;%&ndash;</button>&ndash;%&gt;--%>
+                <%--</div>--%>
+            <%--</c:if>--%>
         <div class="form-group">
             <label for="email">Email</label>
-            <input id="email" name="email" class="form-control" type="text" value=${user.email}>
+            <input id="email" name="email" class="form-control" type="text" value=<%=email%>>
         </div>
         <div class="form-group">
             <label for="password">Password</label>
             <input id="password" name="password" class="form-control" type="password">
         </div>
+            <c:if test="${passwordEmpty}">
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    <strong>Please enter a password</strong>
+                </div>
+            </c:if>
         <div class="form-group">
             <label for="confirm_password">Confirm Password</label>
             <input id="confirm_password" name="confirm_password" class="form-control" type="password">
@@ -65,6 +78,17 @@
         <input type="hidden" name="id" value="${user.id}">
         <button type="submit" class="btn btn-block btn-danger">Delete</button>
     </form>
+    </c:if>
+
+    <c:if test="${sessionScope.listOfErrors.size() > 0}">
+        <div id="errors" class="alert alert-danger">
+            <p>Unable to register user!</p>
+            <ul>
+                <c:forEach var="message" items="${listOfErrors}">
+                    <li><c:out value="${message}"></c:out></li>
+                </c:forEach>
+            </ul>
+        </div>
     </c:if>
 
 
